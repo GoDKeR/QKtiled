@@ -1,13 +1,20 @@
 package qktiled.io;
 
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.list.MutableList;
+import org.eclipse.collections.impl.list.mutable.FastList;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import qktiled.*;
+import qktiled.object.ObjectGroup;
+import qktiled.object.TileObject;
+import qktiled.object.TileObjectType;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
+import java.util.stream.Collectors;
 
 import static util.XmlUtil.asList;
 
@@ -54,6 +61,23 @@ public class TmxMapReader {
         return null;
     }
 
+    /**
+     * Returns an <code>ImmutableList</code> with all valid nodes.
+     * @param nodeList
+     * @return all the ELEMENT_NODE founded in the NodeList.
+     */
+    private static ImmutableList<Node> getValidsChildsNodes(NodeList nodeList){
+        return asList(nodeList).stream().filter(n -> n.getNodeType() == Node.ELEMENT_NODE).collect(Collectors.toCollection(FastList::new)).toImmutable();
+    }
+
+    private static TileObjectType getObjectType(Node n){
+       String type = getAttributeValue(n, "type");
+
+        if (type != null)
+            return new TileObjectType(type);
+        else
+            return new TileObjectType("");
+    }
     private static String[] getData(Node node) {
         String value = node.getTextContent();
 
@@ -120,6 +144,27 @@ public class TmxMapReader {
                             getData(getFirstValidChildNode(n)))));
         }
 
+        /**
+         * Loads the objects groups
+         */
+
+        nl = doc.getElementsByTagName("objectgroup");
+        for (Node n : asList(nl)){
+            ObjectGroup og = new ObjectGroup();
+
+            for (Node nn : getValidsChildsNodes(n.getChildNodes())){
+                og.addObject(new TileObject(getAttribute(nn,"id",0),
+                        getAttribute(nn,"gid",0),
+                        getAttribute(nn, "x", 0),
+                        getAttribute(nn, "y", 0),
+                        getAttribute(nn, "width", 0),
+                        getAttribute(nn, "height", 0),
+                        getAttribute(nn, "visible", 0) == 0 ? false : true,
+                        getObjectType(nn)));
+            }
+
+            map.addObjectGroup(og);
+        }
         return map;
     }
 }

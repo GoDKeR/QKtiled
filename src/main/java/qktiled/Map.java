@@ -2,6 +2,7 @@ package qktiled;
 
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.list.mutable.FastList;
+import qktiled.object.ObjectGroup;
 
 /**
  * <code>Map</code> main structure.
@@ -26,18 +27,30 @@ public class Map {
 
     private MutableList<Layer> mapLayers;
 
+    private MutableList<ObjectGroup> mapObjectsGroups;
+
     public Map() {
         tileSets = new FastList<>();
         mapLayers = new FastList<>();
+        mapObjectsGroups = new FastList<>();
     }
 
-    public Map(int mapWidth, int mapHeight, int tileWidth, int tileHeight, MutableList<TileSet> tileSets, MutableList<Layer> mapLayers) {
+    public Map(int mapWidth, int mapHeight,
+               int tileWidth, int tileHeight,
+               MutableList<TileSet> tileSets, MutableList<Layer> mapLayers, MutableList<ObjectGroup> mapObjectsGroups) {
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
         this.tileSets = tileSets;
         this.mapLayers = mapLayers;
+        this.mapObjectsGroups = mapObjectsGroups;
+    }
+
+    public  MutableList<ObjectGroup> getMapObjectsGroups(){ return mapObjectsGroups; }
+
+    public void addObjectGroup(ObjectGroup og) {
+        this.mapObjectsGroups.add(og);
     }
 
     public MutableList<Layer> getMapLayers() {
@@ -114,7 +127,7 @@ public class Map {
     }
 
     /**
-     * <p>Gives the TileSet corresponding the gid</p>
+     * <p>Gives the TileSet corresponding to the gid</p>
      *
      * @param gid
      * @return A TileSet if contains the given gid, <code>null</code> otherwise
