@@ -4,7 +4,6 @@ package qktiled;
  * <code>Layer</code>
  */
 public class Layer {
-
     /**
      * The name of the layer.
      */
@@ -38,7 +37,9 @@ public class Layer {
          */
         for (int x = 0; x < layerWidth; x++) {
             for (int y = 0; y < layerHeight; y++) {
-                tileCoordinates[x][y] = Integer.parseInt(layerData.getGrid()[(x + (y * layerWidth))]);
+                int tileId = layerData.getGrid()[(x + y * layerWidth)];
+
+                tileCoordinates[x][y] = tileId;
             }
         }
     }

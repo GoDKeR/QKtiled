@@ -19,10 +19,14 @@ public class Map {
      */
     private int tileWidth, tileHeight;
 
+    //todo
     private int nextObjectId;
 
     private String version;
 
+    /**
+     * Lists
+     */
     private MutableList<TileSet> tileSets;
 
     private MutableList<Layer> mapLayers;

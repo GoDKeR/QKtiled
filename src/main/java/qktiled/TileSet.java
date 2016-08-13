@@ -8,17 +8,26 @@ public class TileSet {
     /**
      * First and last gid
      */
-    int firstGid, lastGid;
+    private int firstGid, lastGid;
 
-    String name;
+    /**
+     * TileSet name
+     */
+    private String name;
 
-    TileSetImage image;
+    /**
+     * Image info
+     */
+    private TileSetImage image;
 
-    int tileWidth, tileHeight, tileCount;
+    /**
+     * Properties
+     */
+    private int tileWidth, tileHeight, tileCount;
 
-    int columns;
+    private int columns;
 
-    int tileAmountWidth;
+    private int tileAmountWidth;
 
     public TileSet(int firstGid, String name, TileSetImage image, int tileWidth, int tileHeight, int tileCount, int columns) {
         this.firstGid = firstGid;

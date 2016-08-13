@@ -2,19 +2,21 @@ package qktiled.object;
 
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
-import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.list.mutable.FastList;
 
 import java.util.stream.Collectors;
 
 public class ObjectGroup {
     private MutableList<TileObject> mapObjects;
+    private String name;
 
-    public ObjectGroup(MutableList<TileObject> mapObjects) {
+    public ObjectGroup(MutableList<TileObject> mapObjects, String name) {
         this.mapObjects = mapObjects;
     }
 
-    public ObjectGroup() {
+    public ObjectGroup(String name) {
+        this.name = name;
+
         this.mapObjects = new FastList<TileObject>();
     }
 
@@ -26,6 +28,14 @@ public class ObjectGroup {
         for (TileObject to : list){
             this.mapObjects.add(to);
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -53,5 +63,13 @@ public class ObjectGroup {
                 mapObjects.stream().filter(to -> objectType.equalsIgnoreCase(to.getObjType().getObjectType())).collect(Collectors.toCollection(FastList::new));
 
         return objList.toImmutable();
+    }
+
+    public TileObject getObjectById(int objectID){
+        for (TileObject to : mapObjects) {
+            if (to.getObjId() == objectID)
+                return to;
+        }
+        return null;
     }
 }

@@ -4,36 +4,20 @@ package qktiled;
  * <code>Data</code> of the {@Link Layer}
  */
 public class Data {
-
-    /**
-     * The encode used by Tiled
-     */
-    private String encoding;
-
     /**
      * The grid with the gid's of the map
      */
-    private String[] grid;
+    private int[] grid;
 
-    public Data(String encoding, String[] grid) {
-        this.encoding = encoding;
+    public Data(int[] grid) {
         this.grid = grid;
-
     }
 
-    public String getEncoding() {
-        return encoding;
-    }
-
-    public void setEncoding(String encoding) {
-        this.encoding = encoding;
-    }
-
-    public String[] getGrid() {
+    public int[] getGrid() {
         return grid;
     }
 
-    public void setGrid(String[] grid) {
+    public void setGrid(int[] grid) {
         this.grid = grid;
     }
 }
